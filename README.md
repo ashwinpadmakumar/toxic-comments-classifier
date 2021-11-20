@@ -1,2 +1,2 @@
 # toxic-comments-classifier
-Toxic comments classifier is a machine learning project which is used to sort out in-appropriate comment and classify its corresponding toxic lables like obscene, threat,  insult etc. The working is depicted using a simple end-to-end chat application which runs a trained ML model in the backend.
+Toxic comments classifier is a simple machine learning project which is used to classify in-appropriate comments and sort it out into its corresponding toxic lables like obscene, threat, insult etc. The working is depicted using a normal end-to-end chat application which runs a pre-trained ML model in the backend. The training model uses suprivised learning along with logistic regression.
