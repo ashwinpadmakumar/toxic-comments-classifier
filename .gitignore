@@ -1,0 +1,4 @@
+node_modules/
+.vscode/
+service/backend-model/datasets
+service/backend-model/fit_model

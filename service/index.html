@@ -1,0 +1,119 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>Socket.IO chat</title>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
+  <style>
+    :root {
+      --color: blueviolet;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font: 18px 'Montserrat', sans-serif;
+    }
+
+    form {
+      /* background: #000; */
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      border: 2px solid #000;
+
+      display: flex;
+    }
+
+    form input {
+      padding: 5px;
+      width: 90%;
+    }
+
+    form button {
+      width: 10%;
+      background: rgb(130, 224, 255);
+      border: none;
+      padding: 10px;
+      border-left: 2px solid #000;
+    }
+
+    #messages {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    #messages li {
+      padding: 5px 10px;
+    }
+
+    #messages li:nth-child(odd) {
+      background: #eee;
+    }
+
+
+    .result {
+      color: red;
+      font-size: 20px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      float: right;
+    }
+
+    .username {
+      color: var(--color);
+      font-weight: 600;
+    }
+  </style>
+</head>
+
+<body>
+
+  <ul id="messages"></ul>
+  <form action="">
+    <input id="m" autocomplete="off" />
+    <button>Send</button>
+  </form>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+  <script>
+
+    let nick = prompt('What is your  nickname?');
+
+
+
+    $('input').focus()
+
+    $(function () {
+      var socket = io.connect();
+      socket.on('connect', function () {
+        socket.emit('adduser', nick);
+      });
+
+      $('form').submit(function () {
+        socket.emit('chat message', $('#m').val());
+        $('#m').val('');
+        return false;
+      });
+
+      socket.on('chat message', function (data) {
+        let msg = data.msg;
+        let username = data.name
+
+        let result = data.result !== 'none' ? `<span class='result'>${data.result}</span>` : '';
+        $('#messages').append($('<li>').html(`<p><span class='username'>${username}</span>: ${msg} <span class='result'>${result}</span></p>`));
+      });
+    });
+  </script>
+
+
+
+</body>
+
+</html>
